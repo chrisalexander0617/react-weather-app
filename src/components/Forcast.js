@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default class Forcast extends React.Component {
+    
     constructor(){
         super();
         this.state = {}
@@ -17,4 +18,5 @@ export default class Forcast extends React.Component {
             </div>
         )
     }
+
 }
