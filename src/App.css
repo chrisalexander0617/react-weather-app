@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+
+/*Custom CSS*/
+.loading-screen {
+  position:absolute;
+  top:0;
+  left:0;
+  height:100vh;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  background-color:rgb(22, 39, 63);
+}
+
+.loading-text {
+  color:rgb(217, 229, 255);
+  font-size:2rem;
+  font-weight:bold;
+}
