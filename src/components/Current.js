@@ -4,12 +4,15 @@ import axios from 'axios'
 //import env from "react-dotenv";
 
 import LoadScreen from './LoadScreen'
+import WeatherCard from './WeatherCard'
 
 export default class Current extends React.Component {
     constructor(){
         super();
         this.state = {
             isLoading:true,
+            cityName:'',
+            temp:''
         }
     }
 
@@ -22,13 +25,16 @@ export default class Current extends React.Component {
 
             navigator.geolocation.getCurrentPosition(function(position) {
 
-                const api = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=bc301f252e62782b84a8350d15fe3e06`
+                const api = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial&appid=bc301f252e62782b84a8350d15fe3e06`
                 
                 axios.get(api).then(res => {
 
-                    //Removes loading screen once data has been successfully retrieved
-                    currentComponent.setState({isLoading:false})
-                    
+                    //Removes loading screen and adds data from API call
+                    currentComponent.setState({
+                        isLoading:false, 
+                        cityName:res.data.name, 
+                        temp:res.data.main.temp
+                    })
                 })
             });
         }
@@ -40,12 +46,16 @@ export default class Current extends React.Component {
     render(){
         return (
             <div>
-            { 
+                { 
                 /* Ternary operator that conditional 
                 renders the loading screen based on current 
                 state value */
-               this.state.isLoading &&  <LoadScreen /> 
-            }
+                this.state.isLoading &&  <LoadScreen /> 
+                }
+                <WeatherCard
+                    city={this.state.cityName} 
+                    temp={this.state.temp} 
+                />
             </div>
         )
     }
