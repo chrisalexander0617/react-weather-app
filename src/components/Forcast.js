@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 
+import Moment from 'react-moment'
+
 //import env from "react-dotenv";
 
 import LoadScreen from './LoadScreen'
@@ -44,12 +46,10 @@ export default class Forcast extends React.Component {
     }
 
     render(){
-
         if(this.state.forcastData){
             
             //Array that holds the forcast cards with props
             const forcastCardList = []
-
             const fiveDayForcast = this.state.forcastData
 
             console.log(fiveDayForcast)

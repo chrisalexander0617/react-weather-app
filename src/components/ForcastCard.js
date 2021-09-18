@@ -5,7 +5,7 @@ export default function ForcastCard(props){
         <div>
             <img src={props.icon} />
             <div>{props.date}</div>
-            <div>{props.time}</div>
+            <div>{props.timeStamp}</div>
             <div>{props.temp}</div>
         </div>
     )
