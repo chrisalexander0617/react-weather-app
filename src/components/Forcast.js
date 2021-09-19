@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 
 import LoadScreen from './LoadScreen'
+import NoInternetScreen from './NoInternet'
 import ForcastCard from './ForcastCard'
 
 export default class Forcast extends React.Component {
@@ -10,17 +11,37 @@ export default class Forcast extends React.Component {
         super(props);
         this.state = {
             isLoading:true,
-            forcastData:''
+            forcastData:'',
+            isOnline:''
         }
     }
+
+    
    
     componentDidMount(){
-      
-        // Refers to this current component. Prevents undefined setState error
-        var currentComponent = this;
 
+         // Refers to this current component. Prevents undefined setState error
+         var currentComponent = this;
+
+         // Verifies that there is a consistent internet connection
+        setInterval(function(){
+            if(navigator.onLine) {
+                currentComponent.setState({
+                    isOnline:true
+                })
+            } else {
+                currentComponent.setState({
+                    isOnline:false
+                }) 
+            }
+           
+        }, 1000)
+      
         // Checks to ensure geolocator is available before attempting to grab coordinates
-        if ("geolocation" in navigator) {
+        if ("geolocation" in navigator && navigator.onLine) {
+            currentComponent.setState({
+                isOnline:true
+            })
 
             navigator.geolocation.getCurrentPosition(function(position) {
 
@@ -55,11 +76,8 @@ export default class Forcast extends React.Component {
 
         return (
             <div>
-                { 
-                    // Ternary operator that conditional renders the loading screen based on current state value 
-                    this.state.isLoading &&  <LoadScreen /> 
-                }
-
+                {  this.state.isLoading &&  <LoadScreen /> }
+                {  !this.state.isOnline && <NoInternetScreen /> }
                 { forcastCards }
             </div>
         )

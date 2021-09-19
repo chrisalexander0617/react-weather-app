@@ -4,6 +4,7 @@ import axios from 'axios'
 //import env from "react-dotenv";
 
 import LoadScreen from './LoadScreen'
+import NoInternetScreen from './NoInternet'
 import WeatherCard from './WeatherCard'
 
 export default class Current extends React.Component {
@@ -12,7 +13,8 @@ export default class Current extends React.Component {
         this.state = {
             isLoading:true,
             cityName:'',
-            temp:''
+            temp:'',
+            isOnline:''
         }
     }
 
@@ -21,9 +23,14 @@ export default class Current extends React.Component {
         var currentComponent = this;
 
         //Checks to ensure geolocator is available before attempting to grab coordinates
-        if ("geolocation" in navigator) {
+        if ("geolocation" in navigator && navigator.onLine) {
+
+            currentComponent.setState({
+                isOnline:true
+            })
 
             navigator.geolocation.getCurrentPosition(function(position) {
+                
 
                 const api = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial&appid=bc301f252e62782b84a8350d15fe3e06`
                 
@@ -33,7 +40,7 @@ export default class Current extends React.Component {
                     currentComponent.setState({
                         isLoading:false, 
                         cityName:res.data.name, 
-                        temp:res.data.main.temp
+                        temp:res.data.main.temp,
                     })
                 })
             });
@@ -52,6 +59,8 @@ export default class Current extends React.Component {
                 state value */
                 this.state.isLoading &&  <LoadScreen /> 
                 }
+
+                {  !this.state.isOnline && <NoInternetScreen /> }
                 <WeatherCard
                     city={this.state.cityName} 
                     temp={this.state.temp} 

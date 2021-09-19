@@ -72,7 +72,17 @@
 	height: 5px;
 	left: 0px;
 	background: rgba(12, 241, 245, 0.995);
-	animation: 2s infinite linear loadingAnimation;
+	animation: 1s infinite linear loadingAnimation;
+}
+
+.no-internet-text {
+  color:white;
+}
+
+.reload-link {
+  text-decoration:underline;
+  color:rgb(255, 76, 73);
+  cursor:pointer;
 }
 
 @keyframes loadingAnimation {
