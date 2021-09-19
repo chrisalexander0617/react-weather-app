@@ -9,11 +9,14 @@ export default class  ForcastCard extends React.Component {
   
    render(){
         return (
-            <div>
-                <h1>{this.props.title}</h1>
-                <h3>{ moment(this.props.date).format("dddd, MMMM Do YYYY, h:mm:ss a") }</h3>
+            <div className="forcast-card">
+                <img className="forcast-card-weather-icon" src={`http://openweathermap.org/img/wn/${this.props.icon}@2x.png`} alt={'icon'} />
+                <h3 className="focast-card-temp">{this.props.temp.toFixed()} F</h3>
+                <h3 className="forcast-card-day">{ moment(this.props.date).format("dddd") }</h3>
+                <h3 className="forcast-card-date" >{ moment(this.props.date).format("MMMM Do YYYY") }</h3>
+                <h3 className="forcast-card-time">{ moment(this.props.date).format("h:mm a") }</h3>
             </div>
         )
    }
-
+   
 }

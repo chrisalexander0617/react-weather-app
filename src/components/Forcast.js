@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 
-
 import LoadScreen from './LoadScreen'
 import ForcastCard from './ForcastCard'
 
@@ -50,8 +49,7 @@ export default class Forcast extends React.Component {
         // checks if forcast data is in state
         if(this.state.forcastData) {
             this.state.forcastData.forEach(forcast => {
-                var formattedDate = forcast.dt_txt;
-                forcastCards.push(<ForcastCard title="Forcast" date={forcast.dt_txt} /> )
+                forcastCards.push(<ForcastCard icon={forcast.weather[0].icon} date={forcast.dt_txt} temp={forcast.main.temp} /> )
             })
         }
 
@@ -61,8 +59,10 @@ export default class Forcast extends React.Component {
                     // Ternary operator that conditional renders the loading screen based on current state value 
                     this.state.isLoading &&  <LoadScreen /> 
                 }
-                {forcastCards}
+
+                { forcastCards }
             </div>
         )
     }
+    
 }

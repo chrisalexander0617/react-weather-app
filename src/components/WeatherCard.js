@@ -1,6 +1,7 @@
 import React from 'react';
 
-export default function WeatherCard(props) {
+export default function WeatherCard(props) 
+{
     return (
         <div>
             <h1>{props.city}</h1>
