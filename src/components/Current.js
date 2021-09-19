@@ -7,7 +7,10 @@ import LoadScreen from './LoadScreen'
 import NoInternetScreen from './NoInternet'
 import WeatherCard from './WeatherCard'
 
+import { Container, Row, Col } from 'react-bootstrap'
+
 export default class Current extends React.Component {
+
     constructor(){
         super();
         this.state = {
@@ -19,6 +22,7 @@ export default class Current extends React.Component {
     }
 
     componentDidMount(){
+
         //Refers to this current component. Prevents undefined setState error
         var currentComponent = this;
 
@@ -39,7 +43,6 @@ export default class Current extends React.Component {
             })
 
             navigator.geolocation.getCurrentPosition(function(position) {
-                
 
                 const api = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial&appid=bc301f252e62782b84a8350d15fe3e06`
                 
@@ -61,20 +64,18 @@ export default class Current extends React.Component {
 
     render(){
         return (
-            <div>
-                { 
-                /* Ternary operator that conditional 
-                renders the loading screen based on current 
-                state value */
-                this.state.isLoading &&  <LoadScreen /> 
-                }
-
-                {  !this.state.isOnline && <NoInternetScreen /> }
-                <WeatherCard
-                    city={this.state.cityName} 
-                    temp={this.state.temp} 
-                />
-            </div>
+            <Container>
+                <Row>
+                    <Col>
+                    { this.state.isLoading &&  <LoadScreen /> }
+                    { !this.state.isOnline && <NoInternetScreen /> }
+                    <WeatherCard
+                        city={this.state.cityName} 
+                        temp={this.state.temp} 
+                    />
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }
