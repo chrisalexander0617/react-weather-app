@@ -15,8 +15,6 @@ export default class Forcast extends React.Component {
             isOnline:''
         }
     }
-
-    
    
     componentDidMount(){
 
