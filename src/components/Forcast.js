@@ -1,29 +1,26 @@
 import React from 'react'
 import axios from 'axios'
 
-import Moment from 'react-moment'
-
-//import env from "react-dotenv";
 
 import LoadScreen from './LoadScreen'
 import ForcastCard from './ForcastCard'
 
 export default class Forcast extends React.Component {
     
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             isLoading:true,
             forcastData:''
         }
     }
-
+   
     componentDidMount(){
-
-        //Refers to this current component. Prevents undefined setState error
+      
+        // Refers to this current component. Prevents undefined setState error
         var currentComponent = this;
 
-        //Checks to ensure geolocator is available before attempting to grab coordinates
+        // Checks to ensure geolocator is available before attempting to grab coordinates
         if ("geolocation" in navigator) {
 
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -32,7 +29,7 @@ export default class Forcast extends React.Component {
                 
                 axios.get(api).then(res => {
 
-                    //Removes loading screen and adds data from API call
+                    // Removes loading screen and adds data from API call
                     currentComponent.setState({
                         isLoading:false, 
                         forcastData:res.data.list
@@ -46,32 +43,25 @@ export default class Forcast extends React.Component {
     }
 
     render(){
-        if(this.state.forcastData){
-            
-            //Array that holds the forcast cards with props
-            const forcastCardList = []
-            const fiveDayForcast = this.state.forcastData
 
-            console.log(fiveDayForcast)
+        // variable needs to be initialized before being used in if state or you'll get an undefined error
+        var forcastCards = []
+
+        // checks if forcast data is in state
+        if(this.state.forcastData) {
+            this.state.forcastData.forEach(forcast => {
+                var formattedDate = forcast.dt_txt;
+                forcastCards.push(<ForcastCard title="Forcast" date={forcast.dt_txt} /> )
+            })
         }
-            
-        /*
-        fiveDayForcast.forEach(day => {
-            forcastCardList.push(<ForcastCard />)
-        })
-        */
-        
+
         return (
             <div>
                 { 
-                /* Ternary operator that conditional 
-                renders the loading screen based on current 
-                state value */
-                this.state.isLoading &&  <LoadScreen /> 
+                    // Ternary operator that conditional renders the loading screen based on current state value 
+                    this.state.isLoading &&  <LoadScreen /> 
                 }
-                
-                <ForcastCard />
-               
+                {forcastCards}
             </div>
         )
     }

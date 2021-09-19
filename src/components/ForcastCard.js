@@ -1,12 +1,18 @@
 import React from 'react'
 
-export default function ForcastCard(props){
-    return (
-        <div>
-            <img src={props.icon} />
-            <div>{props.date}</div>
-            <div>{props.timeStamp}</div>
-            <div>{props.temp}</div>
-        </div>
-    )
+export default class  ForcastCard extends React.Component {
+
+    constructor(props){
+        super(props)
+    }
+  
+   render(){
+        return (
+            <div>
+                <h1>{this.props.title}</h1>
+                <h3>{this.props.date}</h3>
+            </div>
+        )
+   }
+   
 }
