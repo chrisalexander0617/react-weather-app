@@ -22,6 +22,15 @@ export default class Current extends React.Component {
         //Refers to this current component. Prevents undefined setState error
         var currentComponent = this;
 
+         // Verifies that there is a consistent internet connection
+         setInterval(function(){
+            if(!navigator.onLine) {
+                currentComponent.setState({
+                    isOnline:false
+                })
+            } 
+        }, 1000)
+
         //Checks to ensure geolocator is available before attempting to grab coordinates
         if ("geolocation" in navigator && navigator.onLine) {
 

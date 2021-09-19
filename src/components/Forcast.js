@@ -5,6 +5,8 @@ import LoadScreen from './LoadScreen'
 import NoInternetScreen from './NoInternet'
 import ForcastCard from './ForcastCard'
 
+import { Container, Row } from 'react-bootstrap'
+
 export default class Forcast extends React.Component {
     
     constructor(props){
@@ -21,18 +23,13 @@ export default class Forcast extends React.Component {
          // Refers to this current component. Prevents undefined setState error
          var currentComponent = this;
 
-         // Verifies that there is a consistent internet connection
+        // Verifies that there is a consistent internet connection
         setInterval(function(){
-            if(navigator.onLine) {
-                currentComponent.setState({
-                    isOnline:true
-                })
-            } else {
+            if(!navigator.onLine) {
                 currentComponent.setState({
                     isOnline:false
-                }) 
-            }
-           
+                })
+            } 
         }, 1000)
       
         // Checks to ensure geolocator is available before attempting to grab coordinates
@@ -76,7 +73,12 @@ export default class Forcast extends React.Component {
             <div>
                 {  this.state.isLoading &&  <LoadScreen /> }
                 {  !this.state.isOnline && <NoInternetScreen /> }
-                { forcastCards }
+                <Container>
+                    <Row>
+                        { forcastCards }
+                    </Row>
+                </Container>
+                
             </div>
         )
     }
