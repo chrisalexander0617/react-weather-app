@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 
 export default class  ForcastCard extends React.Component {
 
@@ -10,9 +11,9 @@ export default class  ForcastCard extends React.Component {
         return (
             <div>
                 <h1>{this.props.title}</h1>
-                <h3>{this.props.date}</h3>
+                <h3>{ moment(this.props.date).format("dddd, MMMM Do YYYY, h:mm:ss a") }</h3>
             </div>
         )
    }
-   
+
 }
