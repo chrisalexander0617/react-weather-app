@@ -80,5 +80,4 @@ export default class Forcast extends React.Component {
             </div>
         )
     }
-
 }
