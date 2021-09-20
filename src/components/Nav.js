@@ -17,7 +17,7 @@ export default function Nav()
         <nav>
           <ul className="list-unstyled d-flex flex-row justify-content-center">
             <li className="mx-3 py-3">
-              <Link to="/">Current Weather</Link>
+              <Link to="/">Current Temperature</Link>
             </li>
             <li className="mx-3 py-3">
               <Link to="/forcast">5 Days Temperature</Link>
