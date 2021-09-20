@@ -18,28 +18,7 @@ export default class Forcast extends React.Component {
         }
     }
 
-    handleGeolocationError(error){
-        var errorMessage;
-
-        switch(error.code){
-            case 1:
-                errorMessage = "User has denied location sevices, or browser has blocked access to geolocation"
-                //Insert setState method here
-                break;
-            case 2:
-                errorMessage = "Geolocation position unavailable, please try again"
-                break;
-            case 3:
-                errorMessage = "Timeout"
-                break;
-            default:
-                errorMessage = "There is an issue"
-        }
-
-        console.log(errorMessage)
-
-        return
-    }
+    
 
     componentDidMount(){
 
@@ -68,7 +47,7 @@ export default class Forcast extends React.Component {
                         forcastData:res.data.list
                     })
                 })
-            },  this.handleGeolocationError );
+            },  handleGeolocationError );
         }
             
         else {
@@ -83,6 +62,29 @@ export default class Forcast extends React.Component {
                 })
             } 
         }, 1000)
+
+        function handleGeolocationError(error){
+            var errorMessage;
+    
+            switch(error.code){
+                case 1:
+                    errorMessage = "User has denied location sevices, or browser has blocked access to geolocation"
+                    //Insert setState method here
+                    break;
+                case 2:
+                    errorMessage = "Geolocation position unavailable, please try again"
+                    break;
+                case 3:
+                    errorMessage = "Timeout"
+                    break;
+                default:
+                    errorMessage = "There is an issue"
+            }
+    
+            console.log(errorMessage)
+    
+            return
+        }
     }
 
     render(){
