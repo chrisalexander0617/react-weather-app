@@ -46,18 +46,21 @@ nav a {
 
 /* Loader */
 
-.loading-screen {
+.loading-screen, .no-location-screen, .no-internet-screen {
   position:absolute;
   top:0;
   left:0;
   height:100vh;
   width:100%;
-  z-index:2;
   display:flex;
   align-items:center;
   flex-direction: column;
   justify-content: center;
   background-color:rgb(22, 39, 63);
+}
+
+.loading-screen {
+  z-index:2 !important;
 }
 
 .loading-text {

@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 
 import LoadScreen from './LoadScreen'
-import NoInternetScreen from './NoInternetScreen'
 import ForcastCard from './ForcastCard'
 import NoLocationScreen from './NoLocationScreen'
 
@@ -26,6 +25,11 @@ export default class Forcast extends React.Component {
 
         // Refers to this current component. Prevents undefined setState error
         var currentComponent = this;
+
+        /* Ensures that the document body is scrollable on the Y axis 
+        if it has been disabled by setInterval below the 2nd 
+        if else statement*/
+        document.querySelector('body').style.overflowY = "visible"
 
         // Verifies that the navigator is online initially
         if(navigator.onLine) {
@@ -63,7 +67,13 @@ export default class Forcast extends React.Component {
                 currentComponent.setState({
                     isOnline:false
                 })
+                /* Hides the overflow of the document 
+                body when the no location screen appears
+                */
+                document.querySelector('body').style.overflowY = "hidden"
             } 
+            else 
+                document.querySelector('body').style.overflowY = "visible"
         }, 1000)
 
 
@@ -126,7 +136,7 @@ export default class Forcast extends React.Component {
                 {}
                 {
                     // No loading screen that appears if internet connection is disconnected
-                    !this.state.isOnline && <NoInternetScreen />
+                    !this.state.isOnline && <NoLocationScreen />
                 }
                 {
                     // Screen that displays when geolocation services are not available (due to settings or user' action)

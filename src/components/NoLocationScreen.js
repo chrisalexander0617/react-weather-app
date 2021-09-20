@@ -7,10 +7,10 @@ function refresh(){
 export default function NoLocationScreen()
 {
     return (
-        <div className="loading-screen no-location-screen">
+        <div className="no-location-screen">
             <div className="loading-text">Location services not available :(</div>
             <p className="no-internet-text">
-                Check to make sure your browser accepts location services <span className="reload-link" onClick={refresh}>reload the page</span>.
+                Check to make sure your browser accepts location services and that you have an internet connect then <span className="reload-link" onClick={refresh}>reload the page</span>.
             </p>
         </div>
     )
