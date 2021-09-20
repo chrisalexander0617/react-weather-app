@@ -19,25 +19,19 @@ export default class Forcast extends React.Component {
     }
 
     handleGeolocationError(error){
-
         var errorMessage;
 
         switch(error.code){
             case 1:
                 errorMessage = "User has denied location sevices, or browser has blocked access to geolocation"
-
                 //Insert setState method here
-
                 break;
-
             case 2:
                 errorMessage = "Geolocation position unavailable, please try again"
                 break;
-
             case 3:
                 errorMessage = "Timeout"
                 break;
-
             default:
                 errorMessage = "There is an issue"
         }
@@ -74,7 +68,6 @@ export default class Forcast extends React.Component {
                         forcastData:res.data.list
                     })
                 })
-
             },  this.handleGeolocationError );
         }
             
@@ -106,10 +99,19 @@ export default class Forcast extends React.Component {
 
         return (
             <div>
-                {this.state.isLoading &&  <LoadScreen />}
-                {!this.state.isOnline && <NoInternetScreen />}
+                {
+                    // Initial loading screen
+                    this.state.isLoading &&  <LoadScreen />
+                }
+                {}
+                {
+                    // No loading screen that appears if internet connection is disconnected
+                    !this.state.isOnline && <NoInternetScreen />
+                }
                 <Container>
-                    <Row>{ forcastCards }</Row>
+                    <Row>
+                        { forcastCards }
+                    </Row>
                 </Container>
             </div>
         )
