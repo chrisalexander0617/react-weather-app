@@ -8,7 +8,6 @@ import NoLocationScreen from './NoLocationScreen'
 import { Container, Row } from 'react-bootstrap'
 
 export default class Forcast extends React.Component {
-    
     constructor(){
         super();
         this.state = {
@@ -27,7 +26,6 @@ export default class Forcast extends React.Component {
     }
 
     componentDidMount(){
-
         // Refers to this current component. Prevents undefined setState error
         var currentComponent = this;
 
@@ -45,7 +43,6 @@ export default class Forcast extends React.Component {
         
         // Checks to ensure geolocator is available before attempting to grab coordinates
         if ("geolocation" in navigator) {
-
             navigator.geolocation.getCurrentPosition(function(position) {
 
                 const api = `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial&appid=bc301f252e62782b84a8350d15fe3e06`
@@ -122,7 +119,6 @@ export default class Forcast extends React.Component {
     }
 
     render(){
-
         // variable needs to be initialized before being used in if state or you'll get an undefined error
         var forcastCards = []
 

@@ -3,7 +3,6 @@ import axios from 'axios'
 
 import LoadScreen from './LoadScreen'
 import NoLocationScreen from './NoLocationScreen'
-
 import WeatherCard from './WeatherCard'
 
 import { Container, Row, Col } from 'react-bootstrap'
@@ -22,7 +21,6 @@ export default class Current extends React.Component {
     }
 
     componentDidMount(){
-
         // Refers to this current component. Prevents undefined setState error
         var currentComponent = this;
 
@@ -40,7 +38,6 @@ export default class Current extends React.Component {
 
         // Checks to ensure geolocator is available before attempting to grab coordinates
         if ("geolocation" in navigator) {
-
             currentComponent.setState({
                 isOnline:true,
                 geoLocation:true,
@@ -48,7 +45,6 @@ export default class Current extends React.Component {
             })
 
             navigator.geolocation.getCurrentPosition(function(position) {
-
                 const api = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial&appid=bc301f252e62782b84a8350d15fe3e06`
                 
                 axios.get(api).then(res => {
