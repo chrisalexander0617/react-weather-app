@@ -12,14 +12,19 @@ export default class Forcast extends React.Component {
     constructor(){
         super();
         this.state = {
+            // Determines the display of loading screen
             isLoading:true,
+
+            // Will contain the weather forcast data upon API fetch
             forcastData:'',
+
+            // Determines if there is a current internet connection
             isOnline:'',
+
+            // Determines if geolocation is available
             geoLocation:true
         }
     }
-
-    
 
     componentDidMount(){
 
@@ -31,7 +36,7 @@ export default class Forcast extends React.Component {
         if else statement*/
         document.querySelector('body').style.overflowY = "visible"
 
-        // Verifies that the navigator is online initially
+        // Verifies that the navigator is online initially 
         if(navigator.onLine) {
             currentComponent.setState({
                 isOnline:true
@@ -61,15 +66,15 @@ export default class Forcast extends React.Component {
             console.error("Geolocation is not available");
         }
 
-        // Verifies that there is a consistent internet connection
+        // Verifies that there is a consistent internet connection (checks every second)
         setInterval(function(){
             if(!navigator.onLine) {
                 currentComponent.setState({
                     isOnline:false
                 })
-                /* Hides the overflow of the document 
-                body when the no location screen appears
-                */
+
+                /* [Cosmetic] Hides the overflow of the document 
+                body when the no location screen appears (prevents scroll)*/
                 document.querySelector('body').style.overflowY = "hidden"
             } 
             else 
@@ -80,7 +85,8 @@ export default class Forcast extends React.Component {
         // Responsible for sending feedback to you and the user if there is an issue with the browser's geolocation feature
         function handleGeolocationError(error){
             var errorMessage;
-    
+            
+            // Handing errors from geolocation by geolocation error codes
             switch(error.code){
                 case 1:
                     errorMessage = "User has denied location sevices, or browser has blocked access to geolocation"
@@ -122,6 +128,7 @@ export default class Forcast extends React.Component {
 
         // checks if forcast data is in state
         if(this.state.forcastData) {
+            // Proceeding to populate array once condition is met
             this.state.forcastData.forEach( (forcast, i) => {
                 forcastCards.push(<ForcastCard key={i} icon={forcast.weather[0].icon} date={forcast.dt_txt} temp={forcast.main.temp} /> )
             })
