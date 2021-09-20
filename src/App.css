@@ -1,50 +1,58 @@
 .App {
-  text-align: center;
+  text-align:center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Navigation */
+
+nav ul {
+  background-color:#f5f5f5;
+  padding:1rem 0;
+  margin-bottom:5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+nav a {
+  text-decoration:none;
+  color:rgb(22, 39, 63);
+  font-weight:bold;
+}
+/* Navigation */
+
+
+
+/* Weather Cards */
+
+.forcast-card {
+  background-color:#fafafa !important;  
+  border:solid 1px rgb(235, 235, 235) !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.forcast-card-day {
+  color:rgb(40, 76, 126) !important;
 }
 
-.App-link {
-  color: #61dafb;
+.text-light-blue {
+  color:rgb(115, 133, 159) !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.forcast-card-weather-icon {
+  width:100px;
+  height:100px;
+  margin:0 auto;
 }
 
+/* Weather Cards */
 
-/*Custom CSS*/
+
+
+/* Loader */
+
 .loading-screen {
   position:absolute;
   top:0;
   left:0;
   height:100vh;
   width:100%;
+  z-index:2;
   display:flex;
   align-items:center;
   flex-direction: column;
@@ -75,14 +83,8 @@
 	animation: 1s infinite linear loadingAnimation;
 }
 
-.no-internet-text {
-  color:white;
-}
-
-.reload-link {
-  text-decoration:underline;
-  color:rgb(255, 76, 73);
-  cursor:pointer;
+.no-location-screen {
+  z-index:3 !important;
 }
 
 @keyframes loadingAnimation {
@@ -106,3 +108,21 @@
 		width: 0px;
 	}
 }
+
+/* Loader */
+
+
+
+/* Misc */
+
+.no-internet-text {
+  color:white;
+}
+
+.reload-link {
+  text-decoration:underline;
+  color:rgb(255, 76, 73);
+  cursor:pointer;
+}
+
+/* Misc */

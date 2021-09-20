@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 
 import LoadScreen from './LoadScreen'
-import NoInternetScreen from './NoInternet'
+import NoInternetScreen from './NoInternetScreen'
 import ForcastCard from './ForcastCard'
 
 import { Container, Row } from 'react-bootstrap'
@@ -27,13 +27,14 @@ export default class Forcast extends React.Component {
         setInterval(function(){
             if(!navigator.onLine) {
                 currentComponent.setState({
-                    isOnline:false
+                    isOnline:''
                 })
             } 
         }, 1000)
       
         // Checks to ensure geolocator is available before attempting to grab coordinates
         if ("geolocation" in navigator && navigator.onLine) {
+            
             currentComponent.setState({
                 isOnline:true
             })

@@ -14,13 +14,13 @@ export default function Nav()
 {
     return (
       <Router>
-        <div>
+        <nav>
           <ul className="list-unstyled d-flex flex-row justify-content-center">
             <li className="mx-3 py-3">
               <Link to="/">Current Weather</Link>
             </li>
             <li className="mx-3 py-3">
-              <Link to="/forcast">5 Day Forcast</Link>
+              <Link to="/forcast">5 Days Temperature</Link>
             </li>
           </ul>
           {/*
@@ -38,7 +38,7 @@ export default function Nav()
               <Forcast />
             </Route>
           </Switch>
-        </div>
+        </nav>
       </Router>
     )
 }

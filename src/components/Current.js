@@ -1,10 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 
-//import env from "react-dotenv";
-
 import LoadScreen from './LoadScreen'
-import NoInternetScreen from './NoInternet'
+import NoInternetScreen from './NoInternetScreen'
+import NoLocationScreen from './NoLocationScreen'
+
 import WeatherCard from './WeatherCard'
 
 import { Container, Row, Col } from 'react-bootstrap'
@@ -14,19 +14,21 @@ export default class Current extends React.Component {
     constructor(){
         super();
         this.state = {
-            isLoading:true,
+            isLoading:false,
             cityName:'',
             temp:'',
-            isOnline:''
+            isOnline:'',
+            locationServicesAccepted:false
         }
     }
 
     componentDidMount(){
 
-        //Refers to this current component. Prevents undefined setState error
+        // Refers to this current component. Prevents undefined setState error
         var currentComponent = this;
 
-         // Verifies that there is a consistent internet connection
+       
+         // Verifies that there is a consistent internet connection, setting the "isOnline" to false will prompt the no internet connection screen
          setInterval(function(){
             if(!navigator.onLine) {
                 currentComponent.setState({
@@ -35,11 +37,13 @@ export default class Current extends React.Component {
             } 
         }, 1000)
 
-        //Checks to ensure geolocator is available before attempting to grab coordinates
+        // Checks to ensure geolocator is available before attempting to grab coordinates
         if ("geolocation" in navigator && navigator.onLine) {
 
             currentComponent.setState({
-                isOnline:true
+                isOnline:true,
+                locationServicesAccepted:true,
+                isLoading:true
             })
 
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -48,7 +52,7 @@ export default class Current extends React.Component {
                 
                 axios.get(api).then(res => {
 
-                    //Removes loading screen and adds data from API call
+                    // Removes loading screen and adds data to local state from API call
                     currentComponent.setState({
                         isLoading:false, 
                         cityName:res.data.name, 
@@ -59,20 +63,24 @@ export default class Current extends React.Component {
         }
             
         else 
-            console.error("Geolocation is not available");
+            currentComponent.setState({
+                isLoading:false, 
+                locationServicesAccepted:false
+            })
     }
 
     render(){
         return (
             <Container>
                 <Row>
-                    <Col>
-                    { this.state.isLoading &&  <LoadScreen /> }
-                    { !this.state.isOnline && <NoInternetScreen /> }
-                    <WeatherCard
-                        city={this.state.cityName} 
-                        temp={this.state.temp} 
-                    />
+                    <Col className="mx-auto" lg={6}>
+                        { this.state.isLoading &&  <LoadScreen /> }
+                        { !this.state.isOnline && <NoInternetScreen /> }
+                        { !this.state.locationServicesAccepted && <NoLocationScreen /> }
+                        <WeatherCard
+                            city={this.state.cityName} 
+                            temp={this.state.temp} 
+                        />
                     </Col>
                 </Row>
             </Container>
