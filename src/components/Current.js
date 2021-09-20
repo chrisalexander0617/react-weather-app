@@ -12,10 +12,19 @@ export default class Current extends React.Component {
     constructor(){
         super();
         this.state = {
+            // Determines the display of loading screen
             isLoading:false,
+
+            // The city name of user's location from API call
             cityName:'',
+
+            // The temp from the city of user's location
             temp:'',
+
+            // Determines if there is an internet connection (error handling)
             isOnline:'',
+
+            // Determines if geolocation is available
             geoLocation:true
         }
     }
@@ -77,41 +86,42 @@ export default class Current extends React.Component {
             } 
         }, 1000)
 
-            function handleGeolocationError(error){
-                var errorMessage;
-        
-                switch(error.code){
-                    case 1:
-                        errorMessage = "User has denied location sevices, or browser has blocked access to geolocation"
-                        //Insert setState method here
-                        currentComponent.setState({
-                            geoLocation:false
-                        })
-                        break;
-                    case 2:
-                        errorMessage = "Geolocation position unavailable, please try again"
-                        currentComponent.setState({
-                            geoLocation:false
-                        })
-                        break;
-                    case 3:
-                        errorMessage = "Timeout"
-                        currentComponent.setState({
-                            geoLocation:false
-                        })
-                        break;
-                    default:
-                        errorMessage = "There is an issue"
-                        currentComponent.setState({
-                            geoLocation:false
-                        })
-                }
-                
-                // For browser feedback
-                console.log(errorMessage)
-        
-                return
+        // Responsible for sending feedback to you and the user if there is an issue with the browser's geolocation feature
+        function handleGeolocationError(error){
+            var errorMessage;
+    
+            switch(error.code){
+                case 1:
+                    errorMessage = "User has denied location sevices, or browser has blocked access to geolocation"
+                    //Insert setState method here
+                    currentComponent.setState({
+                        geoLocation:false
+                    })
+                    break;
+                case 2:
+                    errorMessage = "Geolocation position unavailable, please try again"
+                    currentComponent.setState({
+                        geoLocation:false
+                    })
+                    break;
+                case 3:
+                    errorMessage = "Timeout"
+                    currentComponent.setState({
+                        geoLocation:false
+                    })
+                    break;
+                default:
+                    errorMessage = "There is an issue"
+                    currentComponent.setState({
+                        geoLocation:false
+                    })
             }
+            
+            // For browser feedback
+            console.log(errorMessage)
+    
+            return
+        }
           
     }
 
