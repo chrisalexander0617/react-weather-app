@@ -126,7 +126,7 @@ export default class Forcast extends React.Component {
         if(this.state.forcastData) {
             // Proceeding to populate array once condition is met
             this.state.forcastData.forEach( (forcast, i) => {
-                forcastCards.push(<ForcastCard key={i} icon={forcast.weather[0].icon} date={forcast.dt_txt} temp={forcast.main.temp} /> )
+                forcastCards.push(<ForcastCard  key={i} icon={forcast.weather[0].icon} date={forcast.dt_txt} temp={forcast.main.temp} /> )
             })
         }
 
