@@ -4,6 +4,7 @@ import axios from 'axios'
 import LoadScreen from './LoadScreen'
 import NoInternetScreen from './NoInternetScreen'
 import ForcastCard from './ForcastCard'
+import NoLocationScreen from './NoLocationScreen'
 
 import { Container, Row } from 'react-bootstrap'
 
@@ -14,7 +15,8 @@ export default class Forcast extends React.Component {
         this.state = {
             isLoading:true,
             forcastData:'',
-            isOnline:''
+            isOnline:'',
+            geoLocation:true
         }
     }
 
@@ -44,7 +46,8 @@ export default class Forcast extends React.Component {
                     // Removes loading screen and adds data from API call
                     currentComponent.setState({
                         isLoading:false, 
-                        forcastData:res.data.list
+                        forcastData:res.data.list,
+                        geoLocation:true
                     })
                 })
             },  handleGeolocationError );
@@ -63,6 +66,8 @@ export default class Forcast extends React.Component {
             } 
         }, 1000)
 
+
+        // Responsible for sending feedback to you and the user if there is an issue with the browser's geolocation feature
         function handleGeolocationError(error){
             var errorMessage;
     
@@ -70,17 +75,30 @@ export default class Forcast extends React.Component {
                 case 1:
                     errorMessage = "User has denied location sevices, or browser has blocked access to geolocation"
                     //Insert setState method here
+                    currentComponent.setState({
+                        geoLocation:false
+                    })
                     break;
                 case 2:
                     errorMessage = "Geolocation position unavailable, please try again"
+                    currentComponent.setState({
+                        geoLocation:false
+                    })
                     break;
                 case 3:
                     errorMessage = "Timeout"
+                    currentComponent.setState({
+                        geoLocation:false
+                    })
                     break;
                 default:
                     errorMessage = "There is an issue"
+                    currentComponent.setState({
+                        geoLocation:false
+                    })
             }
-    
+            
+            // For browser feedback
             console.log(errorMessage)
     
             return
@@ -109,6 +127,10 @@ export default class Forcast extends React.Component {
                 {
                     // No loading screen that appears if internet connection is disconnected
                     !this.state.isOnline && <NoInternetScreen />
+                }
+                {
+                    // Screen that displays when geolocation services are not available (due to settings or user' action)
+                    !this.state.geoLocation && <NoLocationScreen />
                 }
                 <Container>
                     <Row>
