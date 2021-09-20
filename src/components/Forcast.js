@@ -9,35 +9,58 @@ import { Container, Row } from 'react-bootstrap'
 
 export default class Forcast extends React.Component {
     
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state = {
             isLoading:true,
             forcastData:'',
             isOnline:''
         }
     }
-   
+
+    handleGeolocationError(error){
+
+        var errorMessage;
+
+        switch(error.code){
+            case 1:
+                errorMessage = "User has denied location sevices, or browser has blocked access to geolocation"
+
+                //Insert setState method here
+
+                break;
+
+            case 2:
+                errorMessage = "Geolocation position unavailable, please try again"
+                break;
+
+            case 3:
+                errorMessage = "Timeout"
+                break;
+
+            default:
+                errorMessage = "There is an issue"
+        }
+
+        console.log(errorMessage)
+
+        return
+    }
+
     componentDidMount(){
 
-         // Refers to this current component. Prevents undefined setState error
-         var currentComponent = this;
+        // Refers to this current component. Prevents undefined setState error
+        var currentComponent = this;
 
-        // Verifies that there is a consistent internet connection
-        setInterval(function(){
-            if(!navigator.onLine) {
-                currentComponent.setState({
-                    isOnline:''
-                })
-            } 
-        }, 1000)
-      
-        // Checks to ensure geolocator is available before attempting to grab coordinates
-        if ("geolocation" in navigator && navigator.onLine) {
-            
+        // Verifies that the navigator is online initially
+        if(navigator.onLine) {
             currentComponent.setState({
                 isOnline:true
-            })
+            }) 
+        }
+        
+        // Checks to ensure geolocator is available before attempting to grab coordinates
+        if ("geolocation" in navigator) {
 
             navigator.geolocation.getCurrentPosition(function(position) {
 
@@ -51,11 +74,22 @@ export default class Forcast extends React.Component {
                         forcastData:res.data.list
                     })
                 })
-            });
+
+            },  this.handleGeolocationError );
         }
             
-        else 
+        else {
             console.error("Geolocation is not available");
+        }
+
+        // Verifies that there is a consistent internet connection
+        setInterval(function(){
+            if(!navigator.onLine) {
+                currentComponent.setState({
+                    isOnline:false
+                })
+            } 
+        }, 1000)
     }
 
     render(){
@@ -72,14 +106,11 @@ export default class Forcast extends React.Component {
 
         return (
             <div>
-                {  this.state.isLoading &&  <LoadScreen /> }
-                {  !this.state.isOnline && <NoInternetScreen /> }
+                {this.state.isLoading &&  <LoadScreen />}
+                {!this.state.isOnline && <NoInternetScreen />}
                 <Container>
-                    <Row>
-                        { forcastCards }
-                    </Row>
+                    <Row>{ forcastCards }</Row>
                 </Container>
-                
             </div>
         )
     }

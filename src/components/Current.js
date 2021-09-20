@@ -63,10 +63,8 @@ export default class Current extends React.Component {
         }
             
         else 
-            currentComponent.setState({
-                isLoading:false, 
-                locationServicesAccepted:false
-            })
+            console.error("Geolocation is not available");
+          
     }
 
     render(){
