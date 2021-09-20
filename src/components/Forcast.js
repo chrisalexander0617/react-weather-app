@@ -136,7 +136,6 @@ export default class Forcast extends React.Component {
                     // Initial loading screen
                     this.state.isLoading &&  <LoadScreen />
                 }
-                {}
                 {
                     // No loading screen that appears if internet connection is disconnected
                     !this.state.isOnline && <NoLocationScreen />
