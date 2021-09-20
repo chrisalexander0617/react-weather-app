@@ -115,7 +115,7 @@ export default class Forcast extends React.Component {
             }
             
             // For browser feedback
-            console.log(errorMessage)
+            console.error(errorMessage)
     
             return
         }
